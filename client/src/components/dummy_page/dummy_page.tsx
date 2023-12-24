@@ -5,12 +5,14 @@ function DummyPage() {
 
   return (
     <>
-      <h1>Dummy Page</h1>
-      <section>
-        <h2>location:</h2>
-        <p>pathname: {location.pathname}</p>
-        <p>seach: {location.search}</p>
-      </section>
+      <main>
+        <h1>Dummy Page</h1>
+        <section>
+          <h2>location:</h2>
+          <p>pathname: {location.pathname}</p>
+          <p>seach: {location.search}</p>
+        </section>
+      </main>
     </>
   );
 }
