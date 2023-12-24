@@ -13,7 +13,7 @@ describe("Navbar", () => {
       </MemoryRouter>
     );
 
-    const mockedLink = screen.getByText(/Mock/);
+    const mockedLink = screen.getByText(mockLink.label);
 
     expect(mockedLink).toBeInTheDocument();
   });
