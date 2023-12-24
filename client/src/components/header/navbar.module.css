@@ -1,0 +1,21 @@
+.navbar {
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar a {
+  font-size: 1.75rem;
+
+  text-decoration: none;
+}
+
+.navbar a[class="active"] {
+  color: darkviolet;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
