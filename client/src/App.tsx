@@ -1,7 +1,12 @@
+import { BrowserRouter } from "react-router-dom";
+import { AppRouter } from "./components/router/app_router";
+
 function App() {
   return (
     <>
-      <p>Hello there! Today is {new Date().toLocaleDateString()}</p>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </>
   );
 }
