@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { MainLayout } from "../layouts/main_layout";
 import { DummyPage } from "../dummy_page/dummy_page";
 
-function AppRouter() {
+function Router() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -14,4 +14,4 @@ function AppRouter() {
   );
 }
 
-export { AppRouter };
+export { Router };
