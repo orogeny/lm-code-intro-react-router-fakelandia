@@ -1,8 +1,13 @@
-// import { afterEach } from "vitest";
-// import { cleanup } from "@testing-library/react";
+import { afterAll, afterEach, beforeAll } from "vitest";
+import { cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
+import { server } from "./src/mocks/node";
 
-// Nolonger needed:
-//  https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-cleanup
+beforeAll(() => server.listen());
 
-// afterEach(() => cleanup());
+afterEach(() => {
+  cleanup();
+  server.resetHandlers();
+});
+
+afterAll(() => server.close());
