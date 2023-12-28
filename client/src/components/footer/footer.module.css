@@ -1,0 +1,7 @@
+.footer {
+  margin-top: auto;
+  padding: 0 16px;
+  display: flex;
+
+  background-color: chartreuse;
+}
