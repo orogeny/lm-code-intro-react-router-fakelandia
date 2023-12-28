@@ -8,13 +8,14 @@ import userEvent from "@testing-library/user-event";
 import { UseFetchHarness } from "./use_fetch_harness";
 import { server } from "../../mocks/node";
 import { delay, HttpResponse, http } from "msw";
+import { API_BASE_URL } from "../../environment_variables";
 
 describe("useFetch hook", () => {
   test("harness displayed", () => {
     render(
       <UseFetchHarness
-        validUrl="http://localhost/api/misdemeanours/4"
-        invalidUrl="http://localhost/api/crimes"
+        validUrl={`${API_BASE_URL}/misdemeanours/0`}
+        invalidUrl={`${API_BASE_URL}/crimes`}
       />
     );
 
@@ -32,7 +33,7 @@ describe("useFetch hook", () => {
 
   test("fetch data", async () => {
     server.use(
-      http.get("http://localhost/api/misdemeanours/4", async () => {
+      http.get(`${API_BASE_URL}/misdemeanours/0`, async () => {
         await delay(750);
         return HttpResponse.json([]);
       })
@@ -43,8 +44,8 @@ describe("useFetch hook", () => {
 
     render(
       <UseFetchHarness
-        validUrl="http://localhost/api/misdemeanours/4"
-        invalidUrl="http://localhost/api/crimes"
+        validUrl={`${API_BASE_URL}/misdemeanours/0`}
+        invalidUrl={`${API_BASE_URL}/crimes`}
       />
     );
 
@@ -62,7 +63,7 @@ describe("useFetch hook", () => {
 
   test("fetch invalid url", async () => {
     server.use(
-      http.get("http://localhost/api/crimes", async () => {
+      http.get(`${API_BASE_URL}/crimes`, async () => {
         await delay(750);
         return new HttpResponse(null, {
           status: 404,
@@ -75,8 +76,8 @@ describe("useFetch hook", () => {
 
     render(
       <UseFetchHarness
-        validUrl="http://localhost/api/misdemeanours/4"
-        invalidUrl="http://localhost/api/crimes"
+        validUrl={`${API_BASE_URL}/misdemeanours/0`}
+        invalidUrl={`${API_BASE_URL}/crimes`}
       />
     );
 

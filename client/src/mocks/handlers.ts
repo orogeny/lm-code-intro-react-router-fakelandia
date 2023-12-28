@@ -1,4 +1,5 @@
 import { http, HttpResponse } from "msw";
+import { API_BASE_URL } from "../environment_variables";
 
 const mockGetResponse = [
   { citizenId: 1, misdemeanour: "lift", date: "2023-12-24" },
@@ -8,7 +9,7 @@ const mockGetResponse = [
 ];
 
 export const handlers = [
-  http.get("http://localhost:8080/api/misdemeanours", () => {
+  http.get(`${API_BASE_URL}/misdemeanours/4`, () => {
     return HttpResponse.json(mockGetResponse);
   }),
 ];
