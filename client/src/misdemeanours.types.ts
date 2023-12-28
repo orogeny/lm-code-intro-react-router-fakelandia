@@ -9,6 +9,8 @@ const MISDEMEANOUR_OPTIONS = [
 
 type MisdemeanourKind = (typeof MISDEMEANOURS)[number];
 
+type MisdemeanourOption = (typeof MISDEMEANOUR_OPTIONS)[number];
+
 const JUST_TALK = "just-talk";
 type JustTalk = typeof JUST_TALK;
 
@@ -33,4 +35,5 @@ export {
   type Misdemeanour,
   type MisdemeanourDto,
   type MisdemeanourKind,
+  type MisdemeanourOption,
 };

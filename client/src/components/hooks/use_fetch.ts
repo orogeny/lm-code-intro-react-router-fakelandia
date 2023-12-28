@@ -44,6 +44,7 @@ function useFetch<T>(url: string = "") {
     }
 
     if (url.length > 0) {
+      console.log("url: ", url);
       fetchData();
     }
 

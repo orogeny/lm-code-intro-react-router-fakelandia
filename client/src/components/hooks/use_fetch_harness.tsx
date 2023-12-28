@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MisdemeanourDto } from "./misdemeanours.types";
+import { MisdemeanourDto } from "../../misdemeanours.types";
 import { useFetch } from "./use_fetch";
 
 type THarnessResponse = {
