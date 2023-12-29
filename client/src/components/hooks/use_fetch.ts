@@ -25,6 +25,7 @@ function useFetch<T>(url: string = "") {
           headers: {
             "Content-Type": "application/json",
           },
+          signal: controller.signal,
         });
 
         const result = (await response.json()) as T;
