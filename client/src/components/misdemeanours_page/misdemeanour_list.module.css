@@ -1,0 +1,20 @@
+.list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 180px;
+
+  justify-items: center;
+  column-gap: 16px;
+  row-gap: 16px;
+
+  font-size: 1.25rem;
+}
+
+.row {
+  display: contents;
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
