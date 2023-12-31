@@ -7,6 +7,8 @@ function MisdemeanoursPage() {
   const { isSuccess, data } = useQuery({
     queryKey: ["misdemeanourse", "all"],
     queryFn: () => fetchMisdemeanours(20),
+    gcTime: Infinity,
+    staleTime: Infinity,
   });
 
   if (!isSuccess) return null;
