@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import styles from "./misdemeanours_page.module.css";
 import { fetchMisdemeanours } from "./fetch_misdemeanours";
-import { MisdemeanourList } from "./misdemeanour_list";
+import { MisdemeanourTable } from "./misdemeanour_table";
 
 function MisdemeanoursPage() {
   const { isSuccess, data } = useQuery({
@@ -15,7 +15,7 @@ function MisdemeanoursPage() {
 
   return (
     <main className={styles.page}>
-      <MisdemeanourList items={data} />
+      <MisdemeanourTable items={data} />
     </main>
   );
 }
