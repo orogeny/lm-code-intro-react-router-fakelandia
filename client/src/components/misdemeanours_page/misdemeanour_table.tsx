@@ -53,7 +53,10 @@ function Row({ item: { citizenId, date, type } }: { item: Misdemeanour }) {
         <Option kind={type} />
       </td>
       <td>
-        <img className={styles.idea} src="https://picsum.photos/160/90" />
+        <img
+          className={styles.idea}
+          src={`https://picsum.photos/seed/${citizenId}/160/90`}
+        />
       </td>
     </tr>
   );
