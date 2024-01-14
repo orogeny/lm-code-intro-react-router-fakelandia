@@ -37,8 +37,10 @@ function fromDto(dto: MisdemeanourDto): Misdemeanour {
 }
 
 export {
+  JUST_TALK,
   MISDEMEANOURS,
   MISDEMEANOUR_OPTIONS,
+  type JustTalk,
   type Misdemeanour,
   type MisdemeanourDto,
   type MisdemeanourKind,
