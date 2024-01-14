@@ -14,14 +14,14 @@ import {
 
 function MisdemeanourTable() {
   const [filter, setFilter] = useState<MisdemeanourDropdownValue>("all");
-  const { isPending, misdemeanours, error } = useContext(MisdemeanoursContext);
+  const { isLoading, misdemeanours, error } = useContext(MisdemeanoursContext);
 
   const handleFilter = (value: MisdemeanourDropdownValue) => {
     console.log("selected filter: ", value);
     setFilter((_) => value);
   };
 
-  if (isPending) {
+  if (isLoading) {
     return <Loading />;
   }
 

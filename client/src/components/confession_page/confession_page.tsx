@@ -4,6 +4,12 @@ import styles from "./confession_page.module.css";
 function ConfessionPage() {
   const handleConfession = (form: ConfessionFormData) => {
     console.log("Confession: ", form);
+
+    // postConfession(form)
+    //   .then((response) => {
+    //     console.log("post response: ", response);
+    //   })
+    //   .catch((error) => console.log("post response error: ", error));
   };
 
   return (

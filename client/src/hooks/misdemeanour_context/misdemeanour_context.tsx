@@ -3,14 +3,15 @@ import {
   MisdemeanourDto,
   fromDto,
 } from "../../misdemeanours.types";
-import { useFetch } from "../use_fetch/use_fetch";
 import { API_BASE_URL } from "../../environment_variables";
-import { createContext, PropsWithChildren } from "react";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import { ConfessionFormData } from "../../components/confession_page/confession_form";
 
 type MisdemeanoursContextValue = {
-  isPending: boolean;
+  isLoading: boolean;
   misdemeanours: Misdemeanour[];
   error: Error;
+  // addConfession: (input: ConfessionFormData) => void
 };
 
 const MisdemeanoursContext = createContext<MisdemeanoursContextValue>(
@@ -18,15 +19,54 @@ const MisdemeanoursContext = createContext<MisdemeanoursContextValue>(
 );
 
 function MisdemeanoursProvider({ children }: PropsWithChildren) {
-  const { data, error } = useFetch<{ misdemeanours: MisdemeanourDto[] }>(
-    `${API_BASE_URL}/misdemeanours/20`
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [misdemeanours, setMisdemeanours] = useState<Misdemeanour[]>([]);
+  const [error, setError] = useState<Error | null>(null);
 
-  const isPending = data === null && error === null;
-  const misdemeanours = data === null ? [] : data.misdemeanours.map(fromDto);
+  useEffect(() => {
+    const controller = new AbortController();
+
+    setMisdemeanours((_) => []);
+    setError((_) => null);
+
+    async function fetchData() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/misdemeanours/20`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = (await response.json()) as {
+          misdemeanours: MisdemeanourDto[];
+        };
+
+        setMisdemeanours(result.misdemeanours.map(fromDto));
+      } catch (err) {
+        setMisdemeanours((_) => []);
+
+        if (err instanceof DOMException) {
+          setError((_) => null);
+        } else {
+          const failure =
+            err instanceof Error
+              ? err
+              : new Error("Failed to load misdemeanours");
+
+          setError((_) => failure);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+
+    return () => controller.abort();
+  }, []);
 
   const value = {
-    isPending,
+    isLoading,
     misdemeanours,
     error,
   } as MisdemeanoursContextValue;
@@ -37,17 +77,5 @@ function MisdemeanoursProvider({ children }: PropsWithChildren) {
     </MisdemeanoursContext.Provider>
   );
 }
-
-// function useMisdemeanours() {
-//   const context = useContext(MisdemeanoursContext);
-
-//   if (context === undefined) {
-//     throw new Error(
-//       "useMisdemeanours must be called within a Misdemenours context"
-//     );
-//   }
-
-//   return context;
-// }
 
 export { MisdemeanoursProvider, MisdemeanoursContext };
