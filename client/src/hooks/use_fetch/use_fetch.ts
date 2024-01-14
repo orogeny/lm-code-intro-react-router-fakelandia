@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 type State<T> = {
-  idle: boolean;
-  loading: boolean;
-  loaded: boolean;
-  failed: boolean;
+  isIdle: boolean;
+  isLoading: boolean;
+  isLoaded: boolean;
+  isError: boolean;
   data: T | null;
   error: Error | null;
 };
@@ -45,7 +45,6 @@ function useFetch<T>(url: string = "") {
     }
 
     if (url.length > 0) {
-      console.log("url: ", url);
       fetchData();
     }
 
@@ -53,10 +52,10 @@ function useFetch<T>(url: string = "") {
   }, [url]);
 
   return {
-    idle: url.length === 0,
-    loading: url.length > 0 && data === null && error === null,
-    loaded: data !== null,
-    failed: error !== null,
+    isIdle: url.length === 0,
+    isLoading: url.length > 0 && data === null && error === null,
+    isLoaded: data !== null,
+    isError: error !== null,
     data,
     error,
   } as State<T>;

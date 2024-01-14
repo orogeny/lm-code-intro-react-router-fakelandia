@@ -23,10 +23,10 @@ describe("useFetch hook", () => {
     expect(screen.getByText(/harness/i)).toBeInTheDocument();
 
     // assert initial state
-    expect(screen.queryByText(/idle/)).toBeInTheDocument();
-    expect(screen.queryByText(/loading/)).toBeNull();
-    expect(screen.queryByText(/loaded/)).toBeNull();
-    expect(screen.queryByText(/failed/)).toBeNull();
+    expect(screen.queryByText(/isIdle/)).toBeInTheDocument();
+    expect(screen.queryByText(/isLoading/)).toBeNull();
+    expect(screen.queryByText(/isLoaded/)).toBeNull();
+    expect(screen.queryByText(/isError/)).toBeNull();
     expect(screen.queryByText(/data/)).toBeNull();
     expect(screen.queryByText(/error/)).toBeNull();
   });
@@ -54,10 +54,10 @@ describe("useFetch hook", () => {
 
     await actor.click(fetchButton);
 
-    await waitForElementToBeRemoved(screen.queryByText(/loading/));
+    await waitForElementToBeRemoved(screen.queryByText(/isLoading/));
 
     // assert state change loading -> loaded
-    expect(screen.getByText(/loaded/)).toBeInTheDocument();
+    expect(screen.getByText(/isLoaded/)).toBeInTheDocument();
     expect(screen.getByText(/data/)).toBeInTheDocument();
   });
 
@@ -86,9 +86,9 @@ describe("useFetch hook", () => {
 
     await actor.click(unknownButton);
 
-    await waitForElementToBeRemoved(screen.queryByText(/loading/));
+    await waitForElementToBeRemoved(screen.queryByText(/isLoading/));
 
-    expect(screen.getByText(/failed/)).toBeInTheDocument();
+    expect(screen.getByText(/isError/)).toBeInTheDocument();
     expect(screen.getByText(/error/)).toBeInTheDocument();
   });
 });

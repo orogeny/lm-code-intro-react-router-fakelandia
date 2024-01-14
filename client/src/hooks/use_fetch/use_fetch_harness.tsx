@@ -15,18 +15,17 @@ function UseFetchHarness({
 }) {
   const [url, setUrl] = useState("");
 
-  const { idle, loading, loaded, failed, data, error } =
+  const { isIdle, isLoading, isLoaded, isError, data, error } =
     useFetch<THarnessResponse>(url);
 
   return (
     <div>
-      <h1>UseFetch Test Harness</h1>
+      <h1>useFetch Test Harness</h1>
 
       <div>
         <button onClick={() => setUrl((_) => "")}>clear</button>
         <button
           onClick={() => {
-            console.log("fetching data");
             setUrl((_) => validUrl);
           }}
         >
@@ -38,10 +37,10 @@ function UseFetchHarness({
       {url.length === 0 ? null : <p>{url}</p>}
 
       <div>
-        {idle ? <p>idle</p> : null}
-        {loading ? <p>loading</p> : null}
-        {loaded ? <p>loaded</p> : null}
-        {failed ? <p>failed</p> : null}
+        {isIdle ? <p>isIdle</p> : null}
+        {isLoading ? <p>isLoading</p> : null}
+        {isLoaded ? <p>isLoaded</p> : null}
+        {isError ? <p>isError</p> : null}
       </div>
 
       {data && <p>data</p>}
