@@ -9,6 +9,13 @@
   font-size: 1.25rem;
 }
 
+.table th {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-end;
+}
+
 .table thead,
 .table tbody,
 .table tr {
