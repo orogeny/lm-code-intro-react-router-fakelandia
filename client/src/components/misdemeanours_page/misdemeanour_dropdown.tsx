@@ -1,14 +1,10 @@
 import { ChangeEvent, useState } from "react";
-import {
-  MISDEMEANOUR_OPTIONS,
-  MisdemeanourKind,
-} from "../../misdemeanours.types";
-
-type MisdemeanourDropdownValue = "all" | MisdemeanourKind;
+import { MISDEMEANOUR_OPTIONS } from "../../misdemeanours.types";
+import { MisdemeanoursFilter } from "../../hooks/misdemeanour_context/misdemeanour_context";
 
 type MisdemeanourDropdownProps = {
-  value: MisdemeanourDropdownValue;
-  handleFilter: (filter: MisdemeanourDropdownValue) => void;
+  value: MisdemeanoursFilter;
+  handleFilter: (filter: MisdemeanoursFilter) => void;
 };
 
 const FILTER_OPTIONS = MISDEMEANOUR_OPTIONS.map(({ type, label }) => ({
@@ -25,7 +21,7 @@ function MisdemeanourDropdown({
   const handleChange = (ev: ChangeEvent<HTMLSelectElement>) => {
     ev.preventDefault();
 
-    const value = ev.target.value as MisdemeanourDropdownValue;
+    const value = ev.target.value as MisdemeanoursFilter;
 
     setFilter((_) => value);
 
@@ -46,4 +42,4 @@ function MisdemeanourDropdown({
   );
 }
 
-export { MisdemeanourDropdown, type MisdemeanourDropdownValue };
+export { MisdemeanourDropdown };

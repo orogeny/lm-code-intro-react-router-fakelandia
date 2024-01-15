@@ -1,41 +1,35 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import {
   MISDEMEANOUR_OPTIONS,
   Misdemeanour,
   MisdemeanourKind,
 } from "../../misdemeanours.types";
 import styles from "./misdemeanour_table.module.css";
-import { MisdemeanoursContext } from "../../hooks/misdemeanour_context/misdemeanour_context";
-import { Loading } from "../loading/loading";
 import {
-  MisdemeanourDropdown,
-  MisdemeanourDropdownValue,
-} from "./misdemeanour_dropdown";
+  MisdemeanoursContext,
+  MisdemeanoursFilter,
+} from "../../hooks/misdemeanour_context/misdemeanour_context";
+import { Loading } from "../loading/loading";
+import { MisdemeanourDropdown } from "./misdemeanour_dropdown";
 
 function MisdemeanourTable() {
-  const [filter, setFilter] = useState<MisdemeanourDropdownValue>("all");
-  const { isLoading, misdemeanours, error } = useContext(MisdemeanoursContext);
+  const context = useContext(MisdemeanoursContext);
 
-  const handleFilter = (value: MisdemeanourDropdownValue) => {
-    console.log("selected filter: ", value);
-    setFilter((_) => value);
+  const handleFilter = (value: MisdemeanoursFilter) => {
+    context.changeFilter(value);
   };
 
-  if (isLoading) {
+  if (context.isLoading) {
     return <Loading />;
   }
 
-  if (error !== null) {
+  if (context.error !== null) {
     return (
       <p>
-        Error: <span>{error.message}</span>
+        Error: <span>{context.error.message}</span>
       </p>
     );
   }
-
-  const items = misdemeanours.filter(
-    (m) => filter === "all" || m.type === filter
-  );
 
   return (
     <table className={styles.table}>
@@ -48,7 +42,10 @@ function MisdemeanourTable() {
             <p>Date</p>
           </th>
           <th>
-            <MisdemeanourDropdown value={filter} handleFilter={handleFilter} />
+            <MisdemeanourDropdown
+              value={context.filter}
+              handleFilter={handleFilter}
+            />
             <p>Misdemeanour</p>
           </th>
           <th>
@@ -58,7 +55,7 @@ function MisdemeanourTable() {
       </thead>
 
       <tbody>
-        {items.map((m) => (
+        {context.misdemeanours.map((m) => (
           <Row key={m.id} item={m} />
         ))}
       </tbody>
