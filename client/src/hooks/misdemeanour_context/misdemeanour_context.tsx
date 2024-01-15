@@ -1,17 +1,28 @@
 import {
   Misdemeanour,
   MisdemeanourDto,
+  MisdemeanourKind,
   fromDto,
 } from "../../misdemeanours.types";
 import { API_BASE_URL } from "../../environment_variables";
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
-import { ConfessionFormData } from "../../components/confession_page/confession_form";
+import {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+type MisdemeanoursFilter = "all" | MisdemeanourKind;
 
 type MisdemeanoursContextValue = {
   isLoading: boolean;
   misdemeanours: Misdemeanour[];
-  error: Error;
-  // addConfession: (input: ConfessionFormData) => void
+  filter: MisdemeanoursFilter;
+  error: Error | null;
+  totalMisdemeanours: number;
+  addMisdemeanour: (misdemeanour: Misdemeanour) => void;
+  changeFilter: (kind: MisdemeanoursFilter) => void;
 };
 
 const MisdemeanoursContext = createContext<MisdemeanoursContextValue>(
@@ -20,13 +31,14 @@ const MisdemeanoursContext = createContext<MisdemeanoursContextValue>(
 
 function MisdemeanoursProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState(true);
-  const [misdemeanours, setMisdemeanours] = useState<Misdemeanour[]>([]);
+  const [data, setData] = useState<Misdemeanour[]>([]);
+  const [filter, setFilter] = useState<MisdemeanoursFilter>("all");
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    setMisdemeanours((_) => []);
+    setData((_) => []);
     setError((_) => null);
 
     async function fetchData() {
@@ -41,9 +53,9 @@ function MisdemeanoursProvider({ children }: PropsWithChildren) {
           misdemeanours: MisdemeanourDto[];
         };
 
-        setMisdemeanours(result.misdemeanours.map(fromDto));
+        setData(result.misdemeanours.map(fromDto));
       } catch (err) {
-        setMisdemeanours((_) => []);
+        setData((_) => []);
 
         if (err instanceof DOMException) {
           setError((_) => null);
@@ -65,9 +77,26 @@ function MisdemeanoursProvider({ children }: PropsWithChildren) {
     return () => controller.abort();
   }, []);
 
+  const misdemeanours = useMemo<Misdemeanour[]>(
+    () => data.filter((m) => filter === "all" || m.type === filter),
+    [filter, data]
+  );
+
+  const addMisdemeanour = (misdemeanour: Misdemeanour) => {
+    setData((prev) => [misdemeanour, ...prev]);
+  };
+
+  const changeFilter = (kind: MisdemeanoursFilter) => {
+    setFilter(kind);
+  };
+
   const value = {
     isLoading,
     misdemeanours,
+    filter,
+    totalMisdemeanours: data.length,
+    addMisdemeanour,
+    changeFilter,
     error,
   } as MisdemeanoursContextValue;
 
@@ -78,4 +107,8 @@ function MisdemeanoursProvider({ children }: PropsWithChildren) {
   );
 }
 
-export { MisdemeanoursProvider, MisdemeanoursContext };
+export {
+  MisdemeanoursProvider,
+  MisdemeanoursContext,
+  type MisdemeanoursFilter,
+};
