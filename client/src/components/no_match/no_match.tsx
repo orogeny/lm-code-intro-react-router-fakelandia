@@ -5,14 +5,14 @@ function NoMatch() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const navigateHome = () => {
-    navigate("/");
-  };
-
   return (
     <div className={styles.container}>
       <p className={styles.message}>Unknown route "{location.pathname}"</p>
-      <button className={styles.button} type="button" onClick={navigateHome}>
+      <button
+        className={styles.button}
+        type="button"
+        onClick={() => navigate("/")}
+      >
         Home
       </button>
     </div>
