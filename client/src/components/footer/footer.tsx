@@ -4,7 +4,7 @@ function Footer() {
   return (
     <>
       <footer className={styles.footer}>
-        <p>The Footer</p>
+        <p>&copy; 2023</p>
       </footer>
     </>
   );

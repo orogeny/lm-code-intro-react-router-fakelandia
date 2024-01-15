@@ -2,6 +2,7 @@
   margin-top: auto;
   padding: 0 16px;
   display: flex;
+  justify-content: flex-end;
 
   background-color: chartreuse;
 }
