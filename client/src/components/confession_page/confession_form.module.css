@@ -1,7 +1,5 @@
 .container {
-  flex-grow: 1;
-
-  padding: 2rem;
+  padding-top: 4rem;
   font-size: 1.25rem;
 }
 

@@ -1,10 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import {
-  JUST_TALK,
-  JustTalk,
-  MISDEMEANOUR_OPTIONS,
-  MisdemeanourKind,
-} from "../../misdemeanours.types";
+import { JUST_TALK, MISDEMEANOUR_OPTIONS } from "../../misdemeanours.types";
 import styles from "./confession_form.module.css";
 
 type FormInputElements =
@@ -15,8 +10,6 @@ type FormInputElements =
 const REASON_OPTIONS = [{ value: JUST_TALK, label: "Just Talk" }].concat(
   MISDEMEANOUR_OPTIONS.map(({ type, label }) => ({ value: type, label }))
 );
-
-type ReasonKind = JustTalk | MisdemeanourKind;
 
 type ConfessionFormData = {
   subject: string;
