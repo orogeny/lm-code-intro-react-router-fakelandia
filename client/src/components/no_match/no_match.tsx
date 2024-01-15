@@ -5,8 +5,6 @@ function NoMatch() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log("NoMatch::location: ", location);
-
   const navigateHome = () => {
     navigate("/");
   };
