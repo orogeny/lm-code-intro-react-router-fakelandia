@@ -1,15 +1,18 @@
 import { http, HttpResponse } from "msw";
 import { API_BASE_URL } from "../environment_variables";
+import { MISDEMEANOURS } from "../misdemeanours.types";
 
-const mockGetResponse = [
-  { citizenId: 1, misdemeanour: "lift", date: "2023-12-24" },
-  { citizenId: 2, misdemeanour: "rudeness", date: "2023-12-24" },
-  { citizenId: 3, misdemeanour: "united", date: "2023-12-24" },
-  { citizenId: 4, misdemeanour: "vegetables", date: "2023-12-24" },
-];
+// Generate 4 misdemeanours for all MisdemeanourKinds except the first
+const mockGetResponse = MISDEMEANOURS.slice(1).flatMap((kind, i) =>
+  Array.from({ length: 4 }).map((_, j) => ({
+    citizenId: 4 * i + j,
+    misdemeanour: kind,
+    date: "2023-12-24",
+  }))
+);
 
 export const handlers = [
-  http.get(`${API_BASE_URL}/misdemeanours/4`, () => {
+  http.get(`${API_BASE_URL}/misdemeanours/12`, () => {
     return HttpResponse.json(mockGetResponse);
   }),
 ];
